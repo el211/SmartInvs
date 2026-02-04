@@ -2,6 +2,7 @@ name: OGUI
 version: 1.0.0
 main: com.ogui.OGUIPlugin
 api-version: 1.13
+depend: [SmartInvs]
 commands:
   ogui:
     description: Open or reload OGUI menus.
