@@ -1,7 +1,23 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
 sourceCompatibility = 8
+
+repositories {
+    mavenCentral()
+    // If SmartInvs isn't on mavenCentral for your version, keep this:
+    maven { url 'https://jitpack.io' }
+}
 
 dependencies {
     implementation project(':core')
+
+    // SmartInvs shaded inside OGUI:
+    implementation 'fr.minuskube.inv:smart-invs:1.2.7'
+
+    // Spigot provided by server:
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
 }
 
@@ -11,13 +27,19 @@ processResources {
     }
 }
 
-jar {
-    // Prevent duplicate files when including :core output.
+tasks.jar { enabled = false } // don’t build the thin jar
+
+tasks.shadowJar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveFileName = 'OGUI-' + project.version + '.jar'
-    from(project(':core').sourceSets.main.output) {
-        exclude 'plugin.yml'
-    }
+    archiveFileName = "OGUI-${project.version}.jar"
+
+    // VERY recommended: relocate to avoid conflicts if another plugin also bundles SmartInvs
+    relocate 'fr.minuskube.inv', 'fr.elias.ogui.libs.smartinvs'
+}
+
+// Make `gradle build` produce the shaded jar
+tasks.build {
+    dependsOn tasks.shadowJar
 }
 
 signing {
