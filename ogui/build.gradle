@@ -6,6 +6,8 @@ dependencies {
 }
 
 jar {
+    // Prevent duplicate files when including :core output.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveFileName = 'OGUI-' + project.version + '.jar'
     from(project(':core').sourceSets.main.output) {
         exclude 'plugin.yml'
