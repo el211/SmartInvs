@@ -52,6 +52,7 @@ public class GuiInventoryProvider implements InventoryProvider {
             int row = slot / 9;
             int column = slot % 9;
             contents.set(SlotPos.of(row, column), clickable);
+            contents.set(guiItem.getSlot(), clickable);
         }
     }
 

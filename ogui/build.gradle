@@ -2,6 +2,26 @@ sourceCompatibility = 8
 
 dependencies {
     implementation project(':core')
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+sourceCompatibility = 8
+
+repositories {
+    mavenCentral()
+    // If SmartInvs isn't on mavenCentral for your version, keep this:
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation project(':core')
+
+    // SmartInvs shaded inside OGUI:
+    implementation 'fr.minuskube.inv:smart-invs:1.2.7'
+
+    // Spigot provided by server:
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
 }
 

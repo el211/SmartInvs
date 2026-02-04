@@ -2,11 +2,13 @@ name: OGUI
 version: ${version}
 main: com.ogui.OGUIPlugin
 api-version: 1.13
+
 commands:
   ogui:
     description: Open or reload OGUI menus.
     usage: /ogui <open|reload> [id] [player]
     permission: ogui.command
+
 permissions:
   ogui.command:
     default: true
