@@ -6,8 +6,10 @@ dependencies {
 }
 
 jar {
+    // Prevent duplicate files when you also include :core output
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveFileName = 'OGUI-' + project.version + '.jar'
+
+    archiveFileName = "OGUI-${project.version}.jar"
     from { project(':core').sourceSets.main.output }
 }
 
