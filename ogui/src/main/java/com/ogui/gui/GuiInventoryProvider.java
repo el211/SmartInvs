@@ -4,6 +4,7 @@ import com.ogui.util.ColorUtil;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import fr.minuskube.inv.content.SlotPos;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -47,6 +48,10 @@ public class GuiInventoryProvider implements InventoryProvider {
                     player.closeInventory();
                 }
             });
+            int slot = guiItem.getSlot();
+            int row = slot / 9;
+            int column = slot % 9;
+            contents.set(SlotPos.of(row, column), clickable);
             contents.set(guiItem.getSlot(), clickable);
         }
     }

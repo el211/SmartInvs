@@ -1,3 +1,7 @@
+sourceCompatibility = 8
+
+dependencies {
+    implementation project(':core')
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
@@ -27,19 +31,13 @@ processResources {
     }
 }
 
-tasks.jar { enabled = false } // don’t build the thin jar
-
-tasks.shadowJar {
+jar {
+    // Prevent duplicate files when including :core output.
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveFileName = "OGUI-${project.version}.jar"
-
-    // VERY recommended: relocate to avoid conflicts if another plugin also bundles SmartInvs
-    relocate 'fr.minuskube.inv', 'fr.elias.ogui.libs.smartinvs'
-}
-
-// Make `gradle build` produce the shaded jar
-tasks.build {
-    dependsOn tasks.shadowJar
+    archiveFileName = 'OGUI-' + project.version + '.jar'
+    from(project(':core').sourceSets.main.output) {
+        exclude 'plugin.yml'
+    }
 }
 
 signing {
