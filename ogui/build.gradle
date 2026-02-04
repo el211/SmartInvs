@@ -1,0 +1,25 @@
+sourceCompatibility = 8
+
+dependencies {
+    implementation project(':core')
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+}
+
+processResources {
+    filesMatching('plugin.yml') {
+        expand(version: project.version)
+    }
+}
+
+jar {
+    // Prevent duplicate files when including :core output.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveFileName = 'OGUI-' + project.version + '.jar'
+    from(project(':core').sourceSets.main.output) {
+        exclude 'plugin.yml'
+    }
+}
+
+signing {
+    required = false
+}
